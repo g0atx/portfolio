@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narendra Srinath Roy | Portfolio</title>
+  <meta name="description" content="Narendra Srinath Roy — Web Developer. Portfolio showcasing projects, skills, GitHub stats, and contact." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>NS</text></svg>">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Base */
+    :root { --transition: 0.35s; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg-color);
+      color:var(--text-color);
+      transition:background var(--transition), color var(--transition);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      position:relative;
+    }
+    a{color:inherit}
+
+    /* Theme variables (red / black / white) */
+    [data-theme="dark"]{
+      --bg-color:#0a0a0a;
+      --text-color:#fff;
+      --muted:#bdbdbd;
+      --card-bg: rgba(255,255,255,0.03);
+      --card-border: rgba(255,255,255,0.06);
+      --card-hover: rgba(255,255,255,0.05);
+      --accent:#ff4c4c;
+      --glass: rgba(255,255,255,0.03);
+    }
+    [data-theme="light"]{
+      --bg-color:#ffffff;
+      --text-color:#0a0a0a;
+      --muted:#4b5563;
+      --card-bg: rgba(0,0,0,0.03);
+      --card-border: rgba(0,0,0,0.06);
+      --card-hover: rgba(255,76,76,0.03);
+      --accent:#ff4c4c;
+      --glass: rgba(0,0,0,0.02);
+    }
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:999;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 36px; backdrop-filter: blur(8px);
+      background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+      transition:padding 250ms, background 250ms, box-shadow 250ms;
+      border-bottom: 1px solid var(--card-border);
+    }
+    header.shrink { padding:10px 28px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+    header h1{font-size:1.15rem;color:var(--accent);letter-spacing:0.6px}
+    nav{display:flex;align-items:center;gap:14px}
+    nav a{color:var(--text-color);text-decoration:none;font-weight:500;opacity:0.95;transition:color .2s}
+    nav a:hover{color:var(--accent)}
+    .theme-toggle{background:none;border:none;font-size:1.15rem;cursor:pointer;color:var(--accent)}
+
+    /* Layout */
+    main{max-width:1100px;margin:24px auto;padding:0 20px}
+    section{padding:70px 0}
+    .section-title{color:var(--accent);font-size:1.9rem;margin-bottom:22px;text-align:center}
+
+    /* Hero */
+    .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;position:relative;text-align:center;overflow:hidden}
+    #particles-js{position:absolute;inset:0;z-index:0;opacity:0.6;pointer-events:none}
+    .hero-content{position:relative;z-index:2;max-width:900px;padding:40px;border-radius:14px}
+    .profile-pic{width:160px;height:160px;border-radius:50%;object-fit:cover;border:4px solid var(--accent);box-shadow:0 8px 30px rgba(255,76,76,0.18);display:block;margin:0 auto 18px}
+    .hero h2{font-size:2.4rem;margin-bottom:8px}
+    .hero p{color:var(--muted);font-size:1.05rem;margin-bottom:18px}
+
+    /* Buttons */
+    .btn{background:var(--accent);color:var(--bg-color);border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(255,76,76,0.12);transition:transform .18s, box-shadow .18s}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(255,76,76,0.18)}
+
+    /* Glass cards */
+    .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+    .card{
+      background:var(--card-bg);
+      border-radius:12px;padding:18px;border:1px solid var(--card-border);
+      transition:transform .25s, background .25s, box-shadow .25s;backdrop-filter: blur(6px);
+    }
+    .card:hover{transform:translateY(-6px); background:var(--card-hover)}
+
+    .card h3{color:var(--accent);margin-bottom:8px}
+    .card p{color:var(--muted)}
+
+    /* Skill bar */
+    .skill{
+      margin-bottom:12px;
+    }
+    .skill label{display:flex;justify-content:space-between;margin-bottom:6px;font-weight:600}
+    .bar{height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;border:1px solid var(--card-border)}
+    .fill{height:100%;background:linear-gradient(90deg,var(--accent),#ff8a8a);width:0;transition:width 1200ms cubic-bezier(.2,.9,.3,1)}
+
+    /* Tech icons */
+    .tech{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center}
+    .tech img{width:56px;height:56px;filter:grayscale(0.05);opacity:0.95;background:transparent;padding:6px;border-radius:8px}
+
+    /* Projects */
+    .project-thumb{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px}
+
+    .project-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+    /* Contact form */
+    form{max-width:720px;margin:18px auto 0;display:flex;flex-direction:column;gap:12px;align-items:center}
+    input[type="text"], input[type="email"], textarea{
+      padding:12px;border-radius:10px;border:1px solid var(--card-border);width:100%;max-width:640px;background:transparent;color:var(--text-color);outline:none
+    }
+    textarea{min-height:120px;resize:vertical}
+    .toast{position:fixed;right:24px;bottom:30px;background:var(--accent);color:var(--bg-color);padding:12px 18px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.25);z-index:9999}
+
+    /* Footer */
+    footer{padding:30px 10px;text-align:center;color:var(--muted);border-top:1px solid var(--card-border);margin-top:40px}
+
+    /* Socials */
+    .socials{display:flex;gap:12px;justify-content:center;margin-top:12px}
+    .socials a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:var(--card-bg);border:1px solid var(--card-border);text-decoration:none;color:var(--text-color);font-weight:600}
+    .socials svg{width:18px;height:18px;fill:var(--text-color)}
+
+    /* GitHub stats images */
+    .gh-stats img{max-width:100%;border-radius:12px;border:1px solid var(--card-border)}
+
+    /* Scroll to top button */
+    #toTop{position:fixed;right:20px;bottom:20px;border-radius:50%;width:50px;height:50px;border:none;background:var(--accent);color:var(--bg-color);display:none;align-items:center;justify-content:center;cursor:pointer;z-index:999}
+
+    /* Animated cursor (subtle) */
+    .cursor-dot{position:fixed;pointer-events:none;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);background:var(--accent);opacity:0.9;z-index:9999;mix-blend-mode:normal}
+
+    /* Responsive */
+    @media (max-width:720px){
+      header{padding:12px 18px}
+      .hero h2{font-size:1.6rem}
+      .profile-pic{width:120px;height:120px}
+      section{padding:48px 0}
+    }
+  </style>
+</head>
+<body>
+
+  <header id="topHeader" data-aos="fade-down">
+    <h1>Narendra Srinath Roy</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#github">GitHub</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    </nav>
+  </header>
+
+  <div id="particles-js"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="hero-content" data-aos="zoom-in">
+        <!-- Put your photo in assets/portfolio_pic.jpg -->
+        <img src="D:\YouTube Roy NS Gamer\portfolio_pic.jpg" alt="Narendra Srinath Roy" class="profile-pic" onerror="this.style.display='none'">
+        <h2><span id="typed"></span></h2>
+        <p>A passionate Web Developer & Problem Solver — I build modern, responsive web apps and APIs.</p>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:14px;">
+          <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
+          <a class="btn" href="assets/Narendra_Srinath_Roy_Resume.pdf" download>📄 Download Resume</a>
+        </div>
+
+        <!-- Socials -->
+        <div class="socials" style="margin-top:16px">
+          <a href="https://github.com/g0atx" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.95 3.2 9.14 7.64 10.62.56.1.76-.24.76-.53 0-.26-.01-1.13-.02-2.05-3.11.68-3.76-1.5-3.76-1.5-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.65 1.23 3.3.94.1-.75.39-1.23.71-1.51-2.48-.28-5.08-1.24-5.08-5.52 0-1.22.43-2.22 1.14-3-.12-.28-.5-1.4.11-2.92 0 0 .94-.3 3.08 1.14.9-.25 1.86-.38 2.82-.38.96 0 1.92.13 2.82.38 2.14-1.44 3.08-1.14 3.08-1.14.61 1.52.23 2.64.11 2.92.71.78 1.14 1.78 1.14 3 0 4.29-2.6 5.23-5.08 5.52.4.35.76 1.02.76 2.06 0 1.49-.01 2.69-.01 3.06 0 .29.2.64.77.53C20.05 20.89 23.25 16.7 23.25 11.75 23.25 5.48 18.27.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 24V7.98h4.02V24H.5zM8.5 24V7.98h3.86v2.1c.54-.92 1.9-1.9 4.06-1.9 4.34 0 5.14 2.86 5.14 6.58V24h-4.02v-6.6c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.48V24H8.5z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section id="tech" data-aos="fade-up">
+      <h2 class="section-title">Tech Stack</h2>
+      <div class="row">
+        <div class="card" data-aos="zoom-in">
+          <div style="text-align:center">
+            <div class="tech" aria-hidden="true">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+            </div>
+            <p style="margin-top:12px;color:var(--muted)">Tools & libs I frequently use — I love building fast, accessible interfaces and robust APIs.</p>
+          </div>
+        </div>
+        <!-- Skill bars card -->
+        <div class="card" data-aos="zoom-in" id="skillCard">
+          <h3>Skills</h3>
+          <div class="skill">
+            <label>JavaScript <span>85%</span></label>
+            <div class="bar"><div class="fill" data-fill="85%"></div></div>
+          </div>
+          <div class="skill">
+            <label>React.js <span>80%</span></label>
+            <div class="bar"><div class="fill" data-fill="80%"></div></div>
+          </div>
+          <div class="skill">
+            <label>HTML & CSS <span>90%</span></label>
+            <div class="bar"><div class="fill" data-fill="90%"></div></div>
+          </div>
+          <div class="skill">
+            <label>Node.js & APIs <span>75%</span></label>
+            <div class="bar"><div class="fill" data-fill="75%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" data-aos="fade-up">
+      <h2 class="section-title">Projects</h2>
+      <div class="row">
+        <div class="card" data-aos="flip-left">
+          <img class="project-thumb" src="assets/thumb-portfolio.jpg" alt="Portfolio thumb" onerror="this.style.display='none'">
+          <h3>Portfolio Website</h3>
+          <p>A modern portfolio built with HTML, CSS, and JavaScript. Mobile friendly, with theme toggle and smooth animations.</p>
+          <div class="project-links">
+            <a class="project-btn btn" href="portfolio.html" target="_blank" rel="noopener">Live Demo</a>
+            <a class="project-btn btn" href="https://github.com/g0atx/portfolio" target="_blank" rel="noopener">Source</a>
+          </div>
+        </div>
+
+        <div class="card" data-aos="flip-left" data-aos-delay="120">
+          <img class="project-thumb" src="assets/thumb-weather.jpg" alt="Weather app" onerror="this.style.display='none'">
+          <h3>Weather App</h3>
+          <p>Real-time weather updates using OpenWeather API, with clean UI and caching.</p>
+          <div class="project-links">
+            <a class="project-btn btn" href="https://g0atx.github.io/weather-app/" target="_blank">Live Demo</a>
+            <a class="project-btn btn" href="https://github.com/g0atx/weather-app" target="_blank">Source</a>
+          </div>
+        </div>
+
+        <div class="card" data-aos="flip-left" data-aos-delay="240">
+          <img class="project-thumb" src="assets/thumb-todo.jpg" alt="To-do app" onerror="this.style.display='none'">
+          <h3>To-Do App</h3>
+          <p>Full-stack productivity app built with Node.js & MongoDB — authentication, REST API and responsive UI.</p>
+          <div class="project-links">
+            <a class="project-btn btn" href="todo.html" target="_blank">Live Demo</a>
+            <a class="project-btn btn" href="https://github.com/g0atx/todo-app" target="_blank">Source</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GITHUB STATS -->
+    <section id="github" data-aos="fade-up">
+      <h2 class="section-title">GitHub Stats</h2>
+      <div class="row gh-stats">
+        <div class="card" style="text-align:center">
+          <!-- Replace g0atx with your GitHub username if needed -->
+          <img src="https://github-readme-stats.vercel.app/api?username=g0atx&show_icons=true&theme=radical" alt="GitHub Stats">
+        </div>
+        <div class="card" style="text-align:center">
+          <img src="https://github-readme-streak-stats.herokuapp.com?user=g0atx&theme=radical" alt="GitHub Streak">
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-aos="fade-up">
+      <h2 class="section-title">Contact</h2>
+      <p style="text-align:center;color:var(--muted)">Want to collaborate or hire me? Send a quick message below or email me at <strong>youremail@example.com</strong>.</p>
+
+      <form id="contactForm" onsubmit="return handleContact(event)" aria-label="Contact form">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" placeholder="Your Message" required></textarea>
+        <div style="display:flex;gap:12px;justify-content:center;width:100%;">
+          <button class="btn" type="submit">Send Message</button>
+          <!-- Example of Formspree integration (uncomment and replace ACTION to use):
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST"> ... </form>
+          -->
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      <div>&copy; <span id="year"></span> Narendra Srinath Roy — Built with ❤️</div>
+    </footer>
+  </main>
+
+  <!-- Toast & cursor & toTop -->
+  <div id="toastContainer"></div>
+  <button id="toTop" aria-label="Scroll to top">↑</button>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    /* --------- Init libs --------- */
+    AOS.init({ duration: 900, once: true });
+
+    new Typed("#typed", {
+      strings: ["Hi, I'm Narendra Srinath Roy 👋", "Web Developer 💻", "Problem Solver 🔥"],
+      typeSpeed: 60, backSpeed: 40, loop: true
+    });
+
+    particlesJS("particles-js", {
+      particles: { number: { value: 60 }, size: { value: 3 }, move: { speed: 2 }, line_linked: { enable: true, distance: 140, color: "#ff4c4c" }, color: { value: "#ff4c4c" } },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } }
+    });
+
+    /* --------- Theme (persist) --------- */
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    function setTheme(t){
+      html.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      themeToggle.textContent = t === 'dark' ? '🌙' : '☀️';
+    }
+    const stored = localStorage.getItem('theme') || 'dark';
+    setTheme(stored);
+    themeToggle.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    /* --------- Header shrink & toTop --------- */
+    const header = document.getElementById('topHeader');
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) header.classList.add('shrink'); else header.classList.remove('shrink');
+      toTop.style.display = window.scrollY > 450 ? 'flex' : 'none';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* --------- Skill bar animation (IntersectionObserver) --------- */
+    const fills = document.querySelectorAll('.fill');
+    const skillsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          fills.forEach(f => f.style.width = f.getAttribute('data-fill'));
+          skillsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    const skillCard = document.getElementById('skillCard');
+    if(skillCard) skillsObserver.observe(skillCard);
+
+    /* --------- Section fade in (small enhancement to AOS) --------- */
+    const sections = document.querySelectorAll('section');
+    const secObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    sections.forEach(s => secObs.observe(s));
+
+    /* --------- Contact form: toast + optional backend --------- */
+    function showToast(msg, timeout=3000){
+      const t = document.createElement('div');
+      t.className = 'toast'; t.textContent = msg;
+      document.getElementById('toastContainer').appendChild(t);
+      setTimeout(()=> t.remove(), timeout);
+    }
+
+    async function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){ showToast('Please fill all fields.'); return false; }
+
+      // If you want to integrate a real backend, replace this block with a fetch() to your server or Formspree
+      // Example (Formspree): fetch('https://formspree.io/f/XXXX', { method:'POST', body: new FormData(form) })
+      // Simulate success:
+      showToast('✅ Message sent — thank you! I will get back to you soon.', 4000);
+      e.target.reset();
+      return false;
+    }
+
+    /* --------- Animated cursor (subtle) --------- */
+    const cursor = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    // Hide on touch devices
+    if('ontouchstart' in window) cursor.style.display = 'none';
+
+    /* --------- Simple progressive enhancement for images fallback --------- */
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', () => {
+        // Optional: set placeholder or hide broken thumbs (we hide to avoid layout issues)
+        img.style.display = 'none';
+      });
+    });
+
+    /* --------- Accessibility: focus outlines for keyboard users --------- */
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Tab') document.body.classList.add('show-focus');
+    });
+
+  </script>
+</body>
+</html>
